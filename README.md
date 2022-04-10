@@ -1,7 +1,7 @@
 # Azure Enterprise Scale Landing Zone
 
 
-<img width="800" alt="image" src="https://user-images.githubusercontent.com/22677711/162624801-4a5dcd8a-1c90-43db-b0ec-c4aa44fbb6a8.png">
+<img width="1024" alt="image" src="https://user-images.githubusercontent.com/22677711/162624801-4a5dcd8a-1c90-43db-b0ec-c4aa44fbb6a8.png">
 
 <img width="800" alt="image" src="https://user-images.githubusercontent.com/22677711/162624819-e9f36bb7-a0f9-4030-a878-e134de8232b8.png">
 
