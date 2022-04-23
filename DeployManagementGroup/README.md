@@ -1,4 +1,4 @@
-Management groups
+** **Management groups
 
 Management groups are a tool to help you structure your cloud environments for organization and governance at scale.
 
