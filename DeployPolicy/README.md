@@ -12,6 +12,8 @@ Use Azure Policy to provide guardrails and ensure continued compliance with your
 
 Azure Policy and deployIfNotExist enables the autonomy in the platform, and reduces the operational burden as you scale your deployments and subscriptions in the Enterprise-Scale architecture. The primary purpose is to ensure that subscriptions and resources are compliant.
 
+![image](https://user-images.githubusercontent.com/22677711/164946452-1edf010f-81d6-44be-8f60-41bdb29bf2ab.png)
+
 
 ### **Custom Policy Definitions**
 
