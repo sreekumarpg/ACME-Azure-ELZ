@@ -1,5 +1,5 @@
 
-### **Azure Policy**
+# **Azure Policy**
 
 Azure Policy helps to enforce organizational standards and to assess compliance at-scale. It also helps to bring your resources to compliance through bulk remediation for existing resources and automatic remediation for new resources.
 
