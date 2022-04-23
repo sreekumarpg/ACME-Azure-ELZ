@@ -13,7 +13,7 @@ The following decisions have been made and included in the implementation for th
 | ------------ | ------------ |
 |Intermediate Root Management Group   | This management group is located directly under the tenant root group. Created with a prefix provided by the organization, which purposely avoids the usage of the root group so that organizations can move existing Azure subscriptions into the hierarchy. It also enables future scenarios.
 | **Platform**  |  This management group contains all the platform child management groups
-| Defense  | This management group contains a dedicated subscription for management, monitoring, and security. This subscription will host an Azure Log Analytics workspace, including associated solutions.
+| Defense  | This management group contains a dedicated subscription for monitoring, and security. This subscription will host an Azure Log Analytics workspace, including associated solutions and Azure Sentinel.
 |NetworkHub   | This management group contains a dedicated subscription for connectivity. This subscription will host the Azure networking resources required for the platform, like Network Virtual Appliance, Azure Firewall
 |  Identity | This management group contains a dedicated subscription for identity. This subscription is a placeholder for Windows Server Active Directory Domain Services (AD DS) virtual machines (VMs) or Azure Active Directory Domain Services
 | Shared | This management group contains a dedicated subscription for Infrastructure shared services like Antivirus , Patch Managment etc
