@@ -61,3 +61,6 @@ Once you have deployed this module to add all of the custom ALZ Azure Policy Def
 ------------
 
 
+
+<img width="878" alt="image" src="https://user-images.githubusercontent.com/22677711/164946649-4296bc86-9b2a-441e-8780-f17b3d57c0fc.png">
+
