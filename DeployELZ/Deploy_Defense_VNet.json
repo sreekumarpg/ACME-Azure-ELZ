@@ -1,0 +1,143 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+//** Define the Virtual Network Name */
+    "DefenseVnetName": {
+      "type": "string",
+      "defaultValue": "vnet-defense",
+      "metadata": {
+        "description": "Name of Defense VNet"
+      }
+    },
+//** Define the Address Space of the Virtual Network */
+      "DefenseCIDR": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/24",
+        "metadata": {
+          "description": "Address prefix for Defense VNet"
+        }
+      },
+//** Define the Name of the the First Subnet */
+      "DefenseSubnet1Name": {
+        "type": "string",
+        "defaultValue": "snet-defense-log-01",
+        "metadata": {
+          "description": "Defense VNet Subnet 1 Name"
+        }
+      },
+//** Define the Address Space of the the First Subnet */
+      "DefenseSubnet1Prefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/27",
+        "metadata": {
+          "description": "Defense VNet Subnet 1 Prefix"
+        }
+      },
+//** Define the Name of the the Network Security Group */
+      "DefenseNSG1Name": {
+        "type": "string",
+        "defaultValue": "nsg-snet-defense-log-01",
+        "metadata": {
+          "description": "This is the name of the defense security group"
+        }
+      },
+
+//** Define the Name of the the First Route Table */
+      "DefenseRouteTableName": {
+        "type": "string",
+        "defaultValue": "rt-default-defense",
+        "metadata": {
+        "description": "Defense VNet Route Table Name."
+        }
+      }
+  },
+  "variables": {},
+  "resources": [
+//* create the First Route Table & Route*/
+    {
+    "apiVersion": "2017-10-01",
+    "type": "Microsoft.Network/routeTables",
+    "name": "[parameters('DefenseRouteTableName')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+    "disableBgpRoutePropagation": true
+    }
+  },
+
+//* create the Network Security Group */
+    {
+    "apiVersion": "2019-02-01",
+    "type": "Microsoft.Network/networkSecurityGroups",
+    "name": "[parameters('DefenseNSG1Name')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+      "securityRules": [
+        {
+          "name": "AllVnet_Inbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Inbound"
+            }
+          },
+        {
+          "name": "AllVnet_Outbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Outbound"
+            }
+          }
+        ]
+      }
+    },
+//* create the Virtual Network */
+    {
+      "apiVersion": "2018-10-01",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('DefenseVnetName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "AddressSpace": {
+          "AddressPrefixes": [
+            "[parameters('DefenseCIDR')]"
+          ]
+        }
+      },
+      "resources": [
+//* create the first subnet */
+        {
+        "apiVersion": "2018-10-01",
+        "type": "subnets",
+        "location": "[resourceGroup().location]",
+        "name": "[parameters('DefenseSubnet1Name')]",
+        "dependsOn": [
+          "[parameters('DefenseVnetName')]",
+          "[resourceId('Microsoft.Network/routeTables', parameters('DefenseRouteTableName'))]"
+        ],
+        "properties": {
+        "AddressPrefix": "[parameters('DefenseSubnet1Prefix')]",
+        "networkSecurityGroup": {
+        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('DefenseNSG1Name'))]"},
+        "routeTable": {
+        "id": "[resourceId('Microsoft.Network/routeTables', parameters('DefenseRouteTableName'))]"
+          }
+         }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+//** Define the Virtual Network Name */
+    "SharedVnetName": {
+      "type": "string",
+      "defaultValue": "vnet-shared",
+      "metadata": {
+        "description": "Name of Shared VNET"
+      }
+    },
+//** Define the Address Space of the Virtual Network */
+      "SharedCIDR": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/24",
+        "metadata": {
+          "description": "Address prefix for Shared VNet"
+        }
+      },
+//** Define the Name of the the First Subnet */
+      "SharedSubnet1Name": {
+        "type": "string",
+        "defaultValue": "snet-shared-ads-01",
+        "metadata": {
+          "description": "Shared VNet Subnet 1 Name"
+        }
+      },
+//** Define the Address Space of the the First Subnet */
+      "SharedSubnet1Prefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/27",
+        "metadata": {
+          "description": "Shared VNet Subnet 1 Prefix"
+        }
+      },
+//** Define the Name of the the Network Security Group */
+      "SharedNSG1Name": {
+        "type": "string",
+        "defaultValue": "nsg-snet-shared-ads-01",
+        "metadata": {
+          "description": "This is the name of the network security group"
+        }
+      },	  
+//** Define the Name of the the Second Subnet */
+      "SharedSubnet2Name": {
+        "type": "string",
+        "defaultValue": "snet-shared-app-01",
+        "metadata": {
+          "description": "Shared VNet Subnet 2 Name"
+        }
+      },
+//** Define the Address Space of the the Second Subnet */
+      "SharedSubnet2Prefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.32/27",
+        "metadata": {
+          "description": "Shared VNet Subnet 2 Prefix"
+        }
+      },
+//** Define the Name of the the Network Security Group */
+      "SharedNSG2Name": {
+        "type": "string",
+        "defaultValue": "nsg-snet-shared-app-01",
+        "metadata": {
+          "description": "This is the name of the network security group"
+        }
+      },
+//** Define the Name of the the First Route Table */
+      "sharedRouteTableName": {
+        "type": "string",
+        "defaultValue": "rt-default-shared",
+        "metadata": {
+        "description": "Shared VNet Route Table Name."
+        }
+      }
+  },
+  "variables": {},
+  "resources": [
+//* create the First Route Table & Route*/
+    {
+    "apiVersion": "2017-10-01",
+    "type": "Microsoft.Network/routeTables",
+    "name": "[parameters('sharedRouteTableName')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+    "disableBgpRoutePropagation": true
+    }
+  },
+
+//* create the Network Security Group */
+    {
+    "apiVersion": "2019-02-01",
+    "type": "Microsoft.Network/networkSecurityGroups",
+    "name": "[parameters('sharedNSG1Name')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+      "securityRules": [
+        {
+          "name": "AllVnet_Inbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Inbound"
+            }
+          },
+        {
+          "name": "AllVnet_Outbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Outbound"
+            }
+          }
+        ]
+      }
+    },
+   {
+    "apiVersion": "2019-02-01",
+    "type": "Microsoft.Network/networkSecurityGroups",
+    "name": "[parameters('sharedNSG2Name')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+      "securityRules": [
+        {
+          "name": "AllVnet_Inbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Inbound"
+            }
+          },
+        {
+          "name": "AllVnet_Outbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Outbound"
+            }
+          }
+        ]
+      }
+    },
+//* create the Virtual Network */
+    {
+      "apiVersion": "2018-10-01",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('sharedVnetName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[parameters('sharedNSG1Name')]"
+      ],
+      "properties": {
+        "AddressSpace": {
+          "AddressPrefixes": [
+            "[parameters('sharedCIDR')]"
+          ]
+        }
+      },
+      "resources": [
+//* create the first subnet */
+        {
+        "apiVersion": "2018-10-01",
+        "type": "subnets",
+        "location": "[resourceGroup().location]",
+        "name": "[parameters('sharedSubnet1Name')]",
+        "dependsOn": [
+          "[parameters('sharedVnetName')]",
+          "[resourceId('Microsoft.Network/routeTables', parameters('sharedRouteTableName'))]"
+        ],
+        "properties": {
+        "AddressPrefix": "[parameters('sharedSubnet1Prefix')]",
+//*attach the Newtork Securoty Group to the Subnet*/
+        "networkSecurityGroup": {
+        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('sharedNSG1Name'))]"},
+//*attacht the First route table to the Subnet*/
+        "routeTable": {
+        "id": "[resourceId('Microsoft.Network/routeTables', parameters('sharedRouteTableName'))]"
+          }
+         }
+        },
+//*create the second subnet*/
+        {
+        "apiVersion": "2018-10-01",
+        "type": "subnets",
+        "location": "[resourceGroup().location]",
+        "name": "[parameters('sharedSubnet2Name')]",
+        "dependsOn": [
+          "[parameters('sharedVnetName')]",
+          "[parameters('sharedSubnet1Name')]"
+        ],
+        "properties": {
+          "AddressPrefix": "[parameters('sharedSubnet2Prefix')]",
+//*attach the Newtork Securoty Group to the Subnet*/
+          "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('sharedNSG2Name'))]"},
+//*attacht the second route table to the Subnet*/
+          "routeTable": {
+          "id": "[resourceId('Microsoft.Network/routeTables', parameters('sharedRouteTableName'))]"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

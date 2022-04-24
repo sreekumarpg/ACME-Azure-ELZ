@@ -1,0 +1,143 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+//** Define the Virtual Network Name */
+    "HubNetworkVnetName": {
+      "type": "string",
+      "defaultValue": "vnet-hubnetwork",
+      "metadata": {
+        "description": "Name of Network VNET"
+      }
+    },
+//** Define the Address Space of the Virtual Network */
+      "HubNetworkCIDR": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/24",
+        "metadata": {
+          "description": "Address prefix for Network VNET"
+        }
+      },
+//** Define the Name of the the First Subnet */
+      "HubNetworkSubnet1Name": {
+        "type": "string",
+        "defaultValue": "snet-hubnetwork-mgmt-01",
+        "metadata": {
+          "description": "Network VNET Subnet 1 Name"
+        }
+      },
+//** Define the Address Space of the the First Subnet */
+      "HubNetworkSubnet1Prefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/27",
+        "metadata": {
+          "description": "Network VNET Subnet 1 Prefix"
+        }
+      },
+//** Define the Name of the the Network Security Group */
+      "HubNetworkNSG1Name": {
+        "type": "string",
+        "defaultValue": "nsg-snet-hubnetwork-mgmt-01",
+        "metadata": {
+          "description": "This is the name of the network security group"
+        }
+      },
+
+//** Define the Name of the the First Route Table */
+      "HubNetworkRouteTableName": {
+        "type": "string",
+        "defaultValue": "rt-default-hubnetwork",
+        "metadata": {
+        "description": "Network VNET Route Table Name."
+        }
+      }
+  },
+  "variables": {},
+  "resources": [
+//* create the First Route Table & Route*/
+    {
+    "apiVersion": "2017-10-01",
+    "type": "Microsoft.Network/routeTables",
+    "name": "[parameters('HubNetworkRouteTableName')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+    "disableBgpRoutePropagation": true
+    }
+  },
+
+//* create the Network Security Group */
+    {
+    "apiVersion": "2019-02-01",
+    "type": "Microsoft.Network/networkSecurityGroups",
+    "name": "[parameters('HubNetworkNSG1Name')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+      "securityRules": [
+        {
+          "name": "AllVnet_Inbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Inbound"
+            }
+          },
+        {
+          "name": "AllVnet_Outbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Outbound"
+            }
+          }
+        ]
+      }
+    },
+//* create the Virtual Network */
+    {
+      "apiVersion": "2018-10-01",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('HubNetworkVnetName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "AddressSpace": {
+          "AddressPrefixes": [
+            "[parameters('HubNetworkCIDR')]"
+          ]
+        }
+      },
+      "resources": [
+//* create the first subnet */
+        {
+        "apiVersion": "2018-10-01",
+        "type": "subnets",
+        "location": "[resourceGroup().location]",
+        "name": "[parameters('HubNetworkSubnet1Name')]",
+        "dependsOn": [
+          "[parameters('HubNetworkVnetName')]",
+          "[resourceId('Microsoft.Network/routeTables', parameters('HubNetworkRouteTableName'))]"
+        ],
+        "properties": {
+        "AddressPrefix": "[parameters('HubNetworkSubnet1Prefix')]",
+        "networkSecurityGroup": {
+        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('HubNetworkNSG1Name'))]"},
+        "routeTable": {
+        "id": "[resourceId('Microsoft.Network/routeTables', parameters('HubNetworkRouteTableName'))]"
+          }
+         }
+        }
+      ]
+    }
+  ]
+}

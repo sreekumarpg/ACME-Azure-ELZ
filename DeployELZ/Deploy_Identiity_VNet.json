@@ -1,0 +1,230 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+//** Define the Virtual Network Name */
+    "IdentityVnetName": {
+      "type": "string",
+      "defaultValue": "vnet-identity",
+      "metadata": {
+        "description": "Name of Network VNET"
+      }
+    },
+//** Define the Address Space of the Virtual Network */
+      "IdentityCIDR": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/24",
+        "metadata": {
+          "description": "Address prefix for Network VNET"
+        }
+      },
+//** Define the Name of the the First Subnet */
+      "IdentitySubnet1Name": {
+        "type": "string",
+        "defaultValue": "snet-identity-ads-01",
+        "metadata": {
+          "description": "Network VNET Subnet 1 Name"
+        }
+      },
+//** Define the Address Space of the the First Subnet */
+      "IdentitySubnet1Prefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/27",
+        "metadata": {
+          "description": "Network VNET Subnet 1 Prefix"
+        }
+      },
+//** Define the Name of the the Network Security Group */
+      "IdentityNSG1Name": {
+        "type": "string",
+        "defaultValue": "nsg-snet-identity-ads-01",
+        "metadata": {
+          "description": "This is the name of the network security group"
+        }
+      },	  
+//** Define the Name of the the Second Subnet */
+      "IdentitySubnet2Name": {
+        "type": "string",
+        "defaultValue": "snet-identity-app-01",
+        "metadata": {
+          "description": "Network VNET Subnet 2 Name"
+        }
+      },
+//** Define the Address Space of the the Second Subnet */
+      "IdentitySubnet2Prefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.32/27",
+        "metadata": {
+          "description": "Network VNET Subnet 2 Prefix"
+        }
+      },
+//** Define the Name of the the Network Security Group */
+      "IdentityNSG2Name": {
+        "type": "string",
+        "defaultValue": "nsg-snet-identity-app-01",
+        "metadata": {
+          "description": "This is the name of the network security group"
+        }
+      },
+//** Define the Name of the the First Route Table */
+      "IdentityRouteTableName": {
+        "type": "string",
+        "defaultValue": "rt-default-identity",
+        "metadata": {
+        "description": "Network VNET Route Table Name."
+        }
+      }
+  },
+  "variables": {},
+  "resources": [
+//* create the First Route Table & Route*/
+    {
+    "apiVersion": "2017-10-01",
+    "type": "Microsoft.Network/routeTables",
+    "name": "[parameters('IdentityRouteTableName')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+    "disableBgpRoutePropagation": true
+    }
+  },
+
+//* create the Network Security Group */
+    {
+    "apiVersion": "2019-02-01",
+    "type": "Microsoft.Network/networkSecurityGroups",
+    "name": "[parameters('IdentityNSG1Name')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+      "securityRules": [
+        {
+          "name": "AllVnet_Inbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Inbound"
+            }
+          },
+        {
+          "name": "AllVnet_Outbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Outbound"
+            }
+          }
+        ]
+      }
+    },
+   {
+    "apiVersion": "2019-02-01",
+    "type": "Microsoft.Network/networkSecurityGroups",
+    "name": "[parameters('IdentityNSG2Name')]",
+    "location": "[resourceGroup().location]",
+    "properties": {
+      "securityRules": [
+        {
+          "name": "AllVnet_Inbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Inbound"
+            }
+          },
+        {
+          "name": "AllVnet_Outbound",
+          "properties": {
+            "description": "Allow ",
+            "protocol": "*",
+            "sourcePortRange": "*",
+            "destinationPortRange": "*",
+            "sourceAddressPrefix": "*",
+            "destinationAddressPrefix": "*",
+            "access": "Allow",
+            "priority": 101,
+            "direction": "Outbound"
+            }
+          }
+        ]
+      }
+    },
+//* create the Virtual Network */
+    {
+      "apiVersion": "2018-10-01",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('IdentityVnetName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[parameters('IdentityNSG1Name')]"
+      ],
+      "properties": {
+        "AddressSpace": {
+          "AddressPrefixes": [
+            "[parameters('IdentityCIDR')]"
+          ]
+        }
+      },
+      "resources": [
+//* create the first subnet */
+        {
+        "apiVersion": "2018-10-01",
+        "type": "subnets",
+        "location": "[resourceGroup().location]",
+        "name": "[parameters('IdentitySubnet1Name')]",
+        "dependsOn": [
+          "[parameters('IdentityVnetName')]",
+          "[resourceId('Microsoft.Network/routeTables', parameters('IdentityRouteTableName'))]"
+        ],
+        "properties": {
+        "AddressPrefix": "[parameters('IdentitySubnet1Prefix')]",
+//*attach the Newtork Securoty Group to the Subnet*/
+        "networkSecurityGroup": {
+        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('IdentityNSG1Name'))]"},
+//*attacht the First route table to the Subnet*/
+        "routeTable": {
+        "id": "[resourceId('Microsoft.Network/routeTables', parameters('IdentityRouteTableName'))]"
+          }
+         }
+        },
+//*create the second subnet*/
+        {
+        "apiVersion": "2018-10-01",
+        "type": "subnets",
+        "location": "[resourceGroup().location]",
+        "name": "[parameters('IdentitySubnet2Name')]",
+        "dependsOn": [
+          "[parameters('IdentityVnetName')]",
+          "[parameters('IdentitySubnet1Name')]"
+        ],
+        "properties": {
+          "AddressPrefix": "[parameters('IdentitySubnet2Prefix')]",
+//*attach the Newtork Securoty Group to the Subnet*/
+          "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('IdentityNSG2Name'))]"},
+//*attacht the second route table to the Subnet*/
+          "routeTable": {
+          "id": "[resourceId('Microsoft.Network/routeTables', parameters('IdentityRouteTableName'))]"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
