@@ -54,7 +54,7 @@ Once you have deployed this module to add all of the custom ALZ Azure Policy Def
 
 ##  **Deploy Custom Policy Definitions in Azure**
 
-> [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsreekumarpg%2FACME-Azure-ELZ%2Fmain%2FDeployPolicy%2FARM_Deploy_policies.json)
+> [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsreekumarpg%2FACME-Azure-ELZ%2Fmain%2FDeployment%2FDeployPolicy%2FARM_Deploy_policies.json)
 
 
 
