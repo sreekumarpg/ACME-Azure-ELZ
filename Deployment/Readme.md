@@ -14,9 +14,7 @@ This document outlines the prerequisites, dependencies and flow to help orchestr
 
 | Order  |  Module | Description  | Link |
 | ------------ | ------------ | ------------ |------------ |
-|1   | Management Groups  | Configures the management group hierarchy to support Azure Landing Zone reference implementation  |[Detailed description](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment/DeployManagementGroup "Detailed description") |
-|2   |Custom Policy Definitions   | Configures Custom Policy Definitions at the organization management group. | [Detailed description](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment/DeployPolicy) |
-| 3  |  Logging & Sentinel | Configures a centrally managed Log Analytics Workspace, Automation Account and Sentinel in the Logging subscription.  | [Detailed description](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment/DeployELZ)|
-|4   | Hub Networking  |Creates Hub networking infrastructure with Azure Firewall to support Hub & Spoke network topology in the Connectivity subscription.   |[Detailed description](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment/DeployELZ) |
-|  5 | Spoke Network  |  Creates Spoke networking infrastructure with Virtual Network Peering to support Hub & Spoke network topology. Spoke subscriptions are used for deploying construction sets and workloads. | [Detailed description](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment/DeployELZ) |
-
+|1   | Management Groups  | Configures the management group hierarchy to support Azure Landing Zone reference implementation  |[Go to Deployment](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment/DeployManagementGroup "Detailed description") |
+|2   |Custom Policy Definitions   | Configures Custom Policy Definitions at the organization management group. | [Go to Deployment](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment/DeployPolicy) |
+| 3  |  Logging & Sentinel | Configures a centrally managed Log Analytics Workspace, Automation Account and Sentinel in the Logging subscription.  | [Go to Deployment](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment/DeployELZ)|
+|4   | Landing Zone  |Creates Hub networking infrastructure with Azure Firewall to support Hub & Spoke network topology in the Connectivity subscription.Creates Spoke networking infrastructure with Virtual Network Peering to support Hub & Spoke network topology. Spoke subscriptions are used for deploying construction sets and workloads.  |[Go to Deployment](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment/DeployELZ) |
