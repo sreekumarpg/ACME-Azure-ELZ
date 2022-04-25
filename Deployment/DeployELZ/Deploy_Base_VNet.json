@@ -5,7 +5,7 @@
 //** Define the Virtual Network Name */
     "VNetName": {
       "type": "string",
-      "defaultValue": "vnet-identity",
+      "defaultValue": "vnet-",
       "metadata": {
         "description": "Name of Network VNET"
       }
@@ -21,7 +21,7 @@
 //** Define the Name of the the First Subnet */
       "Subnet1Name": {
         "type": "string",
-        "defaultValue": "snet-identity-ads-01",
+        "defaultValue": "snet-01",
         "metadata": {
           "description": "Network VNET Subnet 1 Name"
         }
@@ -37,7 +37,7 @@
 //** Define the Name of the the Network Security Group */
       "NSG1Name": {
         "type": "string",
-        "defaultValue": "nsg-snet-identity-ads-01",
+        "defaultValue": "nsg-snet-01",
         "metadata": {
           "description": "This is the name of the network security group"
         }
@@ -45,7 +45,7 @@
 //** Define the Name of the the Second Subnet */
       "Subnet2Name": {
         "type": "string",
-        "defaultValue": "snet-identity-app-01",
+        "defaultValue": "snet-app-01",
         "metadata": {
           "description": "Network VNET Subnet 2 Name"
         }
@@ -61,7 +61,7 @@
 //** Define the Name of the the Network Security Group */
       "NSG2Name": {
         "type": "string",
-        "defaultValue": "nsg-snet-identity-app-01",
+        "defaultValue": "nsg-snet-app-01",
         "metadata": {
           "description": "This is the name of the network security group"
         }
