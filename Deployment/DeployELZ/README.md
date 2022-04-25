@@ -17,35 +17,11 @@ Network topology is a critical element of the landing zone architecture because 
 |Defense   | Module deploys the following resources <ul><li>Virtual Network (VNet)</li><li>Subnets</li><li>Network Security Group</li><li>Network Security Group Rules</li><li>Route Table</li></ul>  |  [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsreekumarpg%2FACME-Azure-ELZ%2Fmain%2FDeployment%2FDeployELZ%2FDeploy_Defense_VNet.json) |
 
 
+------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+|Virtual Network   |Description   |  ARM |
+| ------------ | ------------ | ------------ |
+|New Virtual Network   | Module deploys the following resources <ul><li>Virtual Network (VNet)</li><li>Subnets</li><li>Network Security Group</li><li>Network Security Group Rules</li><li>Route Table</li></ul>  |  [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsreekumarpg%2FACME-Azure-ELZ%2Fmain%2FDeployment%2FDeployELZ%2FDeploy_Base_VNet.json) |
 
 
 ------------
