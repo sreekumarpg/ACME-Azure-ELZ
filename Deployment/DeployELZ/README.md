@@ -3,7 +3,7 @@
 Network topology is a critical element of the landing zone architecture because it defines how applications can communicate with each other. Azure virtual network enables Azure resources to securely communicate with each other, the internet, and on-premises networks.
 
 ## **Azure Landing Zone Network Topology**
-![image](https://user-images.githubusercontent.com/22677711/165087743-9162d142-cace-425b-8e31-7bb5a5bd9335.png)
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/22677711/165087743-9162d142-cace-425b-8e31-7bb5a5bd9335.png">
 
 
 
