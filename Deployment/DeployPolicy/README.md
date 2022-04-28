@@ -23,12 +23,12 @@ Once you have deployed this module to add all of the custom ALZ Azure Policy Def
 
 |Name  | Description  | Effect(s)  | Assignment scope  |
 | ------------ | ------------ | ------------ | ------------ |
-|   |   |   |   |
-|   |   |   |   |
-|   |   |   |   |
-|   |   |   |   |
-|   |   |   |   |
-|   |   |   |   |
+|AppService append enable https only setting to enforce https setting   | Appends the AppService sites object to ensure that HTTPS only is enabled for server/service authentication and protects data in transit from network layer eavesdropping attacks  | append, disabled  | Landing Zones Management Group  |
+| KeyVault SoftDelete should be enabled  | Ensures that Key Vaults are created with soft-delete enabled  | deny, audit, disabled  |Intermediate Root Management Group   |
+| Application Gateway should be deployed with WAF enabled  | Denies creation of Application Gateways when WAF is not enabled | deny, audit, disable  |Landing Zones Management Group   |
+| API App should only be accessible over HTTPS | Use of HTTPS ensures server/service authentication and protects data in transit from network layer eavesdropping attacks  | deny, audit, disabled  | Landing Zone Management Group  |
+| Function App should only be accessible over HTTPS  | Use of HTTPS ensures server/service authentication and protects data in transit from network layer eavesdropping attacks  | deny, audit, disabled  | Landing Zones Management Group  |
+| Web Application should only be accessible over HTTPS  |Use of HTTPS ensures server/service authentication and protects data in transit from network layer eavesdropping attacks  | deny, audit, disabled  | Landing Zones Management Group |
 |   |   |   |   |
 |   |   |   |   |
 |   |   |   |   |
