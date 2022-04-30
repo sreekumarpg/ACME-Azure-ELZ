@@ -33,13 +33,9 @@ The Enterprise-Scale architecture provides prescriptive guidance coupled with Az
    - Enforce VMSS monitoring (Windows & Linux)
    - Enforce VM backup (Windows & Linux)
    - Enforce secure access (HTTPS) to storage accounts
-   - Enforce auditing for Azure SQL
-   - Enforce encryption for Azure SQL
    - Prevent IP forwarding
    - Prevent inbound RDP from internet
    - Ensure subnets are associated with NSG
-   - Associate private endpoints with Azure Private DNS Zones for Azure PaaS services.
-
 
 <img width="1024" alt="image" src="https://user-images.githubusercontent.com/22677711/162624850-c9fd513a-1e7b-4c5e-bb36-eefad3c8047b.png">
 
