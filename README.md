@@ -51,5 +51,5 @@ The Enterprise-Scale architecture provides prescriptive guidance coupled with Az
 ------------
 
 
-<img width="25" alt="image" src="https://user-images.githubusercontent.com/22677711/165051860-c4c594fe-719e-4ba8-8987-fc574482d456.png">[Go to Deployment](https://https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment)
+<img width="25" alt="image" src="https://user-images.githubusercontent.com/22677711/165051860-c4c594fe-719e-4ba8-8987-fc574482d456.png">[Go to Deployment](https://github.com/sreekumarpg/ACME-Azure-ELZ/tree/main/Deployment)
 
