@@ -43,5 +43,7 @@ The Enterprise-Scale architecture provides prescriptive guidance coupled with Az
 
 <img width="1024" alt="image" src="https://user-images.githubusercontent.com/22677711/162624850-c9fd513a-1e7b-4c5e-bb36-eefad3c8047b.png">
 
+## Azure Landing Zone Network Topology 
+
 <img width="1024" alt="image" src="https://user-images.githubusercontent.com/22677711/166102905-7a1958cf-3469-4db2-8b06-d82e7e61c435.png">
 
