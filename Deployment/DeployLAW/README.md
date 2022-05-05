@@ -22,3 +22,7 @@ The module will deploy the following Log Analytics Workspace solutions by defaul
 ##  **Deploy Log Analytics Workspace Solutions**
 
 > [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsreekumarpg%2FACME-Azure-ELZ%2Fmain%2FDeployment%2FDeployLAW%2FlogAnalyticsSolutions.json)
+
+##  **Deploy Storage Accounnt for Flow Log**
+
+> [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsreekumarpg%2FACME-Azure-ELZ%2Fmain%2FDeployment%2FDeployLAW%2FDeploy_StorageAccount.json)
